@@ -6,13 +6,16 @@ class Play extends Phaser.Scene{
         //Load Images
         this.load.image('p1Rocket', './assets/arrowblue.png');
         this.load.image('p2Rocket', './assets/arrowred.png');
-        this.load.image('spaceship', './assets/spaceship.png');
+        this.load.image('temp', './assets/frame1.png');
         this.load.image('starfield', './assets/starfield.png');
+        this.load.spritesheet('knight', './assets/enemyknight.png', 
+        {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 4});
         this.load.spritesheet('explosion', './assets/explosion.png', 
         {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
     create(){
+        let keyA,keyD,keyF,keyR,keyLEFT,keyRIGHT;
         //Scrolling StarFields
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0,0);
         
@@ -36,12 +39,23 @@ class Play extends Phaser.Scene{
         //Add Rocket for Player 1
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p1Rocket',0,keyLEFT, keyRIGHT, keyF).setOrigin(0.5 , 0);
 
+        this.anims.create({
+            key: 'test',
+            frames: this.anims.generateFrameNumbers('knight', {start: 0, end: 3, first: 0,}),
+            frameRate: 9,
+            repeat: -1
+        });
+
         //Add the 3 SpaceShips in the scene
-        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0,0);
-        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
-        this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
+        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'temp', 0, 30).setOrigin(0,0);
+        
+        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'temp', 0, 20).setOrigin(0,0);
+        this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'temp', 0, 10).setOrigin(0,0);
        
         //Animation for the Explosion
+
+        
+
         this.anims.create({
             key: 'explode',
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end:9, first: 0}),
