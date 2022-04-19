@@ -7,7 +7,9 @@ class Play extends Phaser.Scene{
         this.load.image('p1Rocket', './assets/arrowblue.png');
         this.load.image('p2Rocket', './assets/arrowred.png');
         this.load.image('temp', './assets/frame1.png');
-        this.load.image('starfield', './assets/starfield.png');
+        this.load.image('battlefield', './assets/battleground.png');
+
+        //Sprite Sheets for Animations
         this.load.spritesheet('knight', './assets/enemyknight.png', 
         {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 4});
         this.load.spritesheet('explosion', './assets/explosion.png', 
@@ -16,8 +18,8 @@ class Play extends Phaser.Scene{
 
     create(){
         let keyA,keyD,keyF,keyR,keyLEFT,keyRIGHT;
-        //Scrolling StarFields
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0,0);
+        //Scrolling Background Battlefield sprite
+        this.battlefield = this.add.tileSprite(0, 0, 640, 480, 'battlefield').setOrigin(0,0);
         
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
@@ -47,14 +49,11 @@ class Play extends Phaser.Scene{
         });
 
         //Add the 3 SpaceShips in the scene
-        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'temp', 0, 30).setOrigin(0,0);
-        
+        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'temp', 0, 30).setOrigin(0,0); 
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'temp', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'temp', 0, 10).setOrigin(0,0);
        
         //Animation for the Explosion
-
-        
 
         this.anims.create({
             key: 'explode',
@@ -82,7 +81,7 @@ class Play extends Phaser.Scene{
         this.gameOver = false;
         //60 Second Play Clock       
         scoreConfig.fixedWidth = 0;
-        this.clock - this.time.delayedCall(game.settings.gameTimer, () => {
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0,5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart',scoreConfig).setOrigin(0.5);
             this.gameOver = true;
@@ -93,8 +92,8 @@ class Play extends Phaser.Scene{
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.start("menuScene");
         }
-
-        this.starfield.tilePositionX -= 4;
+       
+        this.battlefield.tilePositionX -= 4;
         if(!this.gameOver){
             this.p1Rocket.update();             //Updates Position of Rocket
             this.ship01.update();               //Updates Spaceship 1
@@ -102,6 +101,7 @@ class Play extends Phaser.Scene{
             this.ship03.update();               //Updates Spaceship 3
         }
 
+       
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
