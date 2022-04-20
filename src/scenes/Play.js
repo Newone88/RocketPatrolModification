@@ -4,10 +4,9 @@ class Play extends Phaser.Scene{
     }
     preload() {
         //Load Images
-        this.load.image('p1Rocket', './assets/arrowblue.png');
+        
         this.load.image('p2Rocket', './assets/arrowred.png');
-        this.load.image('temp', './assets/frame1.png');
-        this.load.image('battlefield', './assets/battleground.png');
+        
         this.load.image('p1Ballista', './assets/p1Ballista.png');
         this.load.image('p2Ballista', './assets/p2Ballista.png');
         this.load.image('walls', './assets/FinalWall.png');
@@ -23,16 +22,13 @@ class Play extends Phaser.Scene{
     }
 
     create(){
-        
+        //Create Instance of Background Music
         bkMusic = this.sound.add('battle_music');
         bkMusic.loop = true; // Sets Loop
         bkMusic.play();
 
-
         //Scrolling Background Battlefield sprite
         this.battlefield = this.add.tileSprite(0, 0, 640, 480, 'battlefield').setOrigin(0,0);
-        
-       
         //UI Borders
         this.wall = this.add.tileSprite(0,config.height - borderUISize * 2,640,64, 'walls').setOrigin(0,0);
         

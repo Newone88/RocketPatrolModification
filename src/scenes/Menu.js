@@ -10,11 +10,18 @@ class Menu extends Phaser.Scene{
        this.load.audio('sfx_select', './assets/menuSelect.mp3');
        this.load.audio('sfx_explosion', './assets/enemyDestoried.wav');
        this.load.audio('sfx_rocket', './assets/shooting.mp3');
+
+       //Load Some Images for Title Preset
+       this.load.image('battlefield', './assets/battleground.png');
+       this.load.image('p1Rocket', './assets/arrowblue.png');
+       this.load.image('cap', './assets/horze.png');
+       this.load.image('temp', './assets/frame1.png');
     }
     
     create(){
+
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Brush Script MT',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -30,9 +37,23 @@ class Menu extends Phaser.Scene{
         mnMusic.loop = true; // This is what you are looking for
         mnMusic.play();
 
+
+        
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'battlefield').setOrigin(0,0);
+        this.background.setScale(2);
+        this.knightrow = this.add.tileSprite(0,game.config.height/2 - 130, 640, 32, 'temp').setOrigin(0,0);
+        this.knightrow.setScale(2);
+        this.cap = this.add.tileSprite(game.config.width/2 - 32,game.config.height/2 - 220, 32, 32, 'cap').setOrigin(0,0);
+        this.cap.setScale(2);
+        this.knightrow2 = this.add.tileSprite(160,game.config.height/2 - 190, 160, 32, 'temp').setOrigin(0,0);
+        this.knightrow2.setScale(2);
+        
+        this.arrows = this.add.tileSprite(50,game.config.height/2 + 100, 540, 29, 'p1Rocket').setOrigin(0,0);
+        this.arrows.setScale(1);
+
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize
-        -borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire'
+        -borderPadding, 'MEDIVAL MAYHEM', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, 'A Rocket Patrol Clone By Omar Alkharji'
         , menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
