@@ -11,8 +11,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.keyLFT = keyLT;
         this.keyRGT = keyRT;
         this.keyFRE = keyFR;
-       
-        
+         
     }
 
     update() {

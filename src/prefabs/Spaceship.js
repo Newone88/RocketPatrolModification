@@ -13,7 +13,7 @@ class Spaceship extends Phaser.GameObjects.Sprite {
         this.captain = isCap;
         this.points = pointValue;                         // Store PointValue
         if(isCap == 1){
-            this.moveSpeed = game.settings.spaceshipSpeed+5;
+            this.moveSpeed = game.settings.spaceshipSpeed+3;
         }
         else{
             this.moveSpeed = game.settings.spaceshipSpeed;    // Movement in Pixels per Frame
