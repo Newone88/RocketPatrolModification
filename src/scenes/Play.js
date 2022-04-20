@@ -8,7 +8,8 @@ class Play extends Phaser.Scene{
         this.load.image('p2Rocket', './assets/arrowred.png');
         this.load.image('temp', './assets/frame1.png');
         this.load.image('battlefield', './assets/battleground.png');
-
+        this.load.image('p1Ballista', './assets/p1Ballista.png');
+        this.load.image('p2Ballista', './assets/p2Ballista.png');
         //Sprite Sheets for Animations
         this.load.spritesheet('knight', './assets/EvelNite.png', 
         {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 4});
@@ -40,7 +41,9 @@ class Play extends Phaser.Scene{
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         //Add Rocket for Player 1
+        this.p1Ballista = this.add.sprite(game.config.width/2,game.config.height - borderUISize - borderPadding + 12, 'p1Ballista');
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p1Rocket',0,keyLEFT, keyRIGHT, keyF).setOrigin(0.5 , 0);
+       
 
         this.anims.create({
             key: 'test',
@@ -106,6 +109,7 @@ class Play extends Phaser.Scene{
             this.ship01.update();               //Updates Spaceship 1
             this.ship02.update();               //Updates Spaceship 2
             this.ship03.update();               //Updates Spaceship 3
+            this.updateBallista(this.p1Ballista,this.p1Rocket);
         }
 
        
@@ -139,11 +143,15 @@ class Play extends Phaser.Scene{
         }
     }
 
+    updateBallista(ballista,rocket){
+        ballista.x = rocket.x;
+    }
+
     shipExplode(ship){
         // Temporarly hide Ship
         ship.alpha = 0;
         // Create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'defeat').setOrigin(0,0);
+        let boom = this.add.sprite(ship.x - 10, ship.y + 5, 'defeat').setOrigin(0,0);
         boom.anims.play('destroy');         // Play Explosion Animation
         boom.on('animationcomplete', () => {// Callback after anim completes
             ship.reset();                   // Reset Ship Position

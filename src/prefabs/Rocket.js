@@ -11,8 +11,8 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.keyLFT = keyLT;
         this.keyRGT = keyRT;
         this.keyFRE = keyFR;
-        console.log(this.keyRGT);
-        console.log(this.keyFRE);
+       
+        
     }
 
     update() {
@@ -21,6 +21,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
         if(!this.isFiring){
             if(this.keyLFT.isDown && this.x >= borderUISize + this.width){
                 this.x -= this.moveSpeed;
+                
             }
             else if (this.keyRGT.isDown && this.x <= game.config.width -
             borderUISize - this.width){
