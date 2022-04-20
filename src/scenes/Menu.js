@@ -22,9 +22,9 @@ class Menu extends Phaser.Scene{
 
         let menuConfig = {
             fontFamily: 'Brush Script MT',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontSize: '32px',
+            backgroundColor: '#8B0000',
+            color: '#FFFFFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -41,9 +41,9 @@ class Menu extends Phaser.Scene{
         
         this.background = this.add.tileSprite(0, 0, 640, 480, 'battlefield').setOrigin(0,0);
         this.background.setScale(2);
-        this.knightrow = this.add.tileSprite(0,game.config.height/2 - 130, 640, 32, 'temp').setOrigin(0,0);
+        this.knightrow = this.add.tileSprite(0,game.config.height/2 - 130, 640, 31, 'temp').setOrigin(0,0);
         this.knightrow.setScale(2);
-        this.cap = this.add.tileSprite(game.config.width/2 - 32,game.config.height/2 - 220, 32, 32, 'cap').setOrigin(0,0);
+        this.cap = this.add.tileSprite(game.config.width/2 - 32,game.config.height/2 - 220, 31, 31, 'cap').setOrigin(0,0);
         this.cap.setScale(2);
         this.knightrow2 = this.add.tileSprite(160,game.config.height/2 - 190, 160, 32, 'temp').setOrigin(0,0);
         this.knightrow2.setScale(2);
@@ -53,21 +53,28 @@ class Menu extends Phaser.Scene{
 
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize
         -borderPadding, 'MEDIVAL MAYHEM', menuConfig).setOrigin(0.5);
+        
+
         this.add.text(game.config.width/2, game.config.height/2, 'A Rocket Patrol Clone By Omar Alkharji'
         , menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize +
-        borderPadding, 'Press ← for Novice or → for Expert', menuConfig).setOrigin(0.5);
 
+        menuConfig.fontSize = '22px';
+        menuConfig.fontFamily = 'Palatino';
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize +
+        borderPadding + 30, 'SINGLE PLAYER : FOR EASY PRESS ← FOR HARD PRESS ↑', menuConfig).setOrigin(0.5);
+
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize +
+        borderPadding + 120, 'TWO PLAYER : FOR EASY PRESS → FOR HARD PRESS ↓', menuConfig).setOrigin(0.5);
         //Key Binding
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     }
 
     update(){
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)){
-            //Easy mode
+            //Single Player Easy mode
             game.settings = {
                 spaceshipSpeed: 3,
                 gameTimer: 60000
@@ -76,11 +83,22 @@ class Menu extends Phaser.Scene{
             this.sound.play('sfx_select');
             this.scene.start('PlayScene');
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)){
-            // Hard Mode
+        if (Phaser.Input.Keyboard.JustDown(keyUP)){
+            //Single Player Hard Mode
             game.settings = {
                 spaceshipSpeed: 4,
                 gameTimer: 45000
+            }
+            mnMusic.stop();
+            this.sound.play('sfx_select');
+            this.scene.start('PlayScene');
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)){
+            // 2P Easy Mode
+            game.settings = {
+                spaceshipSpeed: 3,
+                gameTimer: 60000
             }
             mnMusic.stop();
             this.sound.play('sfx_select');

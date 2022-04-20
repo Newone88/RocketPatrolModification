@@ -8,7 +8,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 //Reserve KeyBindings for Rocket Controls
-let keyA,keyD,keyF,keyR,keyLEFT,keyRIGHT;
+let keyA,keyD,keyS,keyF,keyR,keyLEFT,keyRIGHT,keyUP,keyDOWN;
 
 let bkMusic, mnMusic;
 

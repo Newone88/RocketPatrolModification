@@ -85,10 +85,10 @@ class Play extends Phaser.Scene{
         this.p1Score = 0;
         //Display Score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Times',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#543c24',
+            color: '#FFFFFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -97,7 +97,11 @@ class Play extends Phaser.Scene{
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-        
+        this.scoretext = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 30, "SCORE", scoreConfig);
+
+
+        this.firetext = this.add.text(game.config.width/2, game.config.height/2, 'FIRE', scoreConfig).setOrigin(0,5);
+
         //GAME OVER Flags
         this.gameOver = false;
         //60 Second Play Clock       
@@ -114,7 +118,7 @@ class Play extends Phaser.Scene{
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.start("menuScene");
         }
-       
+        
         this.battlefield.tilePositionX -= 4;
         if(!this.gameOver){
             this.p1Rocket.update();             //Updates Position of Rocket
@@ -124,7 +128,13 @@ class Play extends Phaser.Scene{
             this.updateBallista(this.p1Ballista,this.p1Rocket);
         }
 
-       
+        if(this.p1Rocket.isFiring){
+            this.firetext.alpha = 1;
+        }
+        else if(!this.p1Rocket.isFiring){
+            this.firetext.alpha = 0;
+        }
+
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
