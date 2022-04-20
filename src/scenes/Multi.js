@@ -86,8 +86,8 @@ class Multi extends Phaser.Scene{
 
 
         //Score Initialization
-        this.p1Score = 100;
-        this.p2Score = 100;
+        this.p1Score = 0;
+        this.p2Score = 0;
 
         //Display Score
         let scoreConfig = {
@@ -124,7 +124,7 @@ class Multi extends Phaser.Scene{
         this.timer = this.add.text(400, borderUISize + borderPadding*2, 'Remaining Time' + this.counter, timerConfig);
 
 
-        this.firetext = this.add.text(game.config.width/2, game.config.height/2, 'FIRE', scoreConfig).setOrigin(0,5);
+        this.firetext = this.add.text(game.config.width/2, game.config.height/2 - 10, 'FIRE', scoreConfig).setOrigin(0,5);
 
         //GAME OVER Flags
         this.gameOver = false;

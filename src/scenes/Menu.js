@@ -108,7 +108,7 @@ class Menu extends Phaser.Scene{
             // 2P Hard Mode
             game.settings = {
                 spaceshipSpeed: 4,
-                gameTimer: 5000
+                gameTimer: 45000
             }
             mnMusic.stop();
             this.sound.play('sfx_select');

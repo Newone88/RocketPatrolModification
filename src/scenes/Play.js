@@ -4,9 +4,7 @@ class Play extends Phaser.Scene{
     }
     preload() {
         //Load Images
-        
         this.load.image('p2Rocket', './assets/arrowred.png');
-        
         this.load.image('p1Ballista', './assets/p1Ballista.png');
         this.load.image('p2Ballista', './assets/p2Ballista.png');
         this.load.image('walls', './assets/FinalWall.png');
@@ -114,10 +112,10 @@ class Play extends Phaser.Scene{
         }
 
         this.counter;
-        this.timer = this.add.text(450, borderUISize + borderPadding*2, 'Remaining' + this.counter, timerConfig);
+        this.timer = this.add.text(370, borderUISize + borderPadding*2 - 20, 'Remaining Time :' + this.counter, timerConfig);
 
 
-        this.firetext = this.add.text(game.config.width/2, game.config.height/2, 'FIRE', scoreConfig).setOrigin(0,5);
+        this.firetext = this.add.text(200, game.config.height/2, 'FIRE', scoreConfig).setOrigin(0,5);
 
         //GAME OVER Flags
         this.gameOver = false;
@@ -136,7 +134,7 @@ class Play extends Phaser.Scene{
             this.scene.start("menuScene");
         }
         
-        this.timer.text = 'Remaining' + this.clock.getRemainingSeconds().toFixed(0);
+        this.timer.text = 'Remaining Time :' + this.clock.getRemainingSeconds().toFixed(0);
 
         this.battlefield.tilePositionX -= 4;
         if(!this.gameOver){
