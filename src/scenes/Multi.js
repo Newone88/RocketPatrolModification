@@ -86,13 +86,13 @@ class Multi extends Phaser.Scene{
 
 
         //Score Initialization
-        this.p1Score = 0;
-        this.p2Score = 0;
+        this.p1Score = 100;
+        this.p2Score = 100;
 
         //Display Score
         let scoreConfig = {
             fontFamily: 'Times',
-            fontSize: '28px',
+            fontSize: '24px',
             backgroundColor: '#543c24',
             color: '#FFFFFF',
             align: 'right',
@@ -100,17 +100,17 @@ class Multi extends Phaser.Scene{
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-        this.scoretext = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 30, "SCORE P1", scoreConfig);
+        this.scoreLeft = this.add.text(borderUISize * 2, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        this.scoretext = this.add.text(borderUISize , borderUISize + borderPadding*2 - 30, "SCORE P1", scoreConfig);
 
-        this.scorePlayer2 = this.add.text(borderUISize + borderPadding * 2, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-        this.scoretextP2 = this.add.text(borderUISize + borderPadding * 2, borderUISize + borderPadding*2 - 30, "SCORE P2", scoreConfig);
+        this.scorePlayer2 = this.add.text(borderUISize * 6.5, borderUISize + borderPadding*2, this.p2Score, scoreConfig);
+        this.scoretextP2 = this.add.text(borderUISize * 5+ borderPadding * 2, borderUISize + borderPadding*2 - 30, "SCORE P2", scoreConfig);
 
         let timerConfig = {
             fontFamily: 'Times',
-            fontSize: '28px',
+            fontSize: '24px',
             backgroundColor: '#543c24',
             color: '#FFFFFF',
             align: 'right',
@@ -121,7 +121,7 @@ class Multi extends Phaser.Scene{
         }
 
         this.counter;
-        this.timer = this.add.text(450, borderUISize + borderPadding*2, 'Remaining' + this.counter, timerConfig);
+        this.timer = this.add.text(400, borderUISize + borderPadding*2, 'Remaining Time' + this.counter, timerConfig);
 
 
         this.firetext = this.add.text(game.config.width/2, game.config.height/2, 'FIRE', scoreConfig).setOrigin(0,5);
@@ -132,8 +132,18 @@ class Multi extends Phaser.Scene{
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             bkMusic.stop();
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0,5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart',scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            
+            if(this.p1Score > this.p2Score){
+                this.add.text(game.config.width/2, game.config.height/2 + 48, 'PLAYER 1 WINS!', scoreConfig).setOrigin(0.5);
+            }
+            else if(this.p1Score < this.p2Score){
+                this.add.text(game.config.width/2, game.config.height/2 + 48, 'PLAYER 2 WINS!', scoreConfig).setOrigin(0.5);
+            }
+            else{
+                this.add.text(game.config.width/2, game.config.height/2 + 48, 'THIS MATCH IS A DRAW!', scoreConfig).setOrigin(0.5);
+            }
+            this.add.text(game.config.width/2, game.config.height/2 + 96, 'Press (R) to Restart',scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);    
     }
@@ -143,7 +153,7 @@ class Multi extends Phaser.Scene{
             this.scene.start("menuScene");
         } 
         
-        this.timer.text = 'Remaining' + this.clock.getRemainingSeconds().toFixed(0);
+        this.timer.text = 'Remaining Time : ' + this.clock.getRemainingSeconds().toFixed(0);
         this.battlefield.tilePositionX -= 4;
 
         if(!this.gameOver){

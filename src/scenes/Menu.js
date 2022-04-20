@@ -104,11 +104,11 @@ class Menu extends Phaser.Scene{
             this.sound.play('sfx_select');
             this.scene.start('MultiplayScene');
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)){
-            // 2P Easy Mode
+        if (Phaser.Input.Keyboard.JustDown(keyDOWN)){
+            // 2P Hard Mode
             game.settings = {
                 spaceshipSpeed: 4,
-                gameTimer: 60000
+                gameTimer: 5000
             }
             mnMusic.stop();
             this.sound.play('sfx_select');
