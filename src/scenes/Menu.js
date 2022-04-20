@@ -26,6 +26,10 @@ class Menu extends Phaser.Scene{
             fixedWidth: 0
         }
         
+        mnMusic = this.sound.add('menu_music');
+        mnMusic.loop = true; // This is what you are looking for
+        mnMusic.play();
+
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize
         -borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire'
@@ -47,6 +51,7 @@ class Menu extends Phaser.Scene{
                 spaceshipSpeed: 3,
                 gameTimer: 60000
             }
+            mnMusic.stop();
             this.sound.play('sfx_select');
             this.scene.start('PlayScene');
         }
@@ -56,6 +61,7 @@ class Menu extends Phaser.Scene{
                 spaceshipSpeed: 4,
                 gameTimer: 45000
             }
+            mnMusic.stop();
             this.sound.play('sfx_select');
             this.scene.start('PlayScene');
         }

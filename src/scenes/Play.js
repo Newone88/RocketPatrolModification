@@ -10,6 +10,9 @@ class Play extends Phaser.Scene{
         this.load.image('battlefield', './assets/battleground.png');
         this.load.image('p1Ballista', './assets/p1Ballista.png');
         this.load.image('p2Ballista', './assets/p2Ballista.png');
+        this.load.image('walls', './assets/FinalWall.png');
+        this.load.image('border', './assets/BorderTop.png');
+        this.load.image('leftborder', './assets/BorderSide1.png');
         //Sprite Sheets for Animations
         this.load.spritesheet('knight', './assets/EvelNite.png', 
         {frameWidth: 48, frameHeight: 48, startFrame: 0, endFrame: 4});
@@ -20,17 +23,20 @@ class Play extends Phaser.Scene{
     }
 
     create(){
-        let keyA,keyD,keyF,keyR,keyLEFT,keyRIGHT;
+        
+        bkMusic = this.sound.add('battle_music');
+        bkMusic.loop = true; // Sets Loop
+        bkMusic.play();
+
+
         //Scrolling Background Battlefield sprite
         this.battlefield = this.add.tileSprite(0, 0, 640, 480, 'battlefield').setOrigin(0,0);
         
-        // green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
-        // white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
+       
+        //UI Borders
+        this.wall = this.add.tileSprite(0,config.height - borderUISize * 2,640,64, 'walls').setOrigin(0,0);
+        
+       
     
         //Add Controls for the Rockets
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -70,6 +76,15 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('defeat', { start: 0, end:6, first: 0}),
             frameRate: 19
         });
+
+        this.borderleft = this.add.tileSprite(-26,64, 64,640,'leftborder').setOrigin(0,0);
+        this.borderright = this.add.tileSprite(game.config.width - borderUISize * 1.5 + 10, 64, 64,640,'leftborder').setOrigin(0,0);
+        this.borderright.flipX = true;
+        this.border = this.add.tileSprite(0,64, 640,64,'border').setOrigin(0,0);
+        this.borderReflect = this.add.tileSprite(0,0, 640,64,'border').setOrigin(0,0);
+        this.borderReflect.flipY = true;
+
+
         //Score Initialization
         this.p1Score = 0;
         //Display Score
@@ -92,10 +107,11 @@ class Play extends Phaser.Scene{
         //60 Second Play Clock       
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            bkMusic.stop();
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0,5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart',scoreConfig).setOrigin(0.5);
             this.gameOver = true;
-        }, null, this);
+        }, null, this);    
     }
 
     update() {
